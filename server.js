@@ -1,32 +1,11 @@
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
-const http = require('http');
-const WebSocket = require('ws');
 const compress = require('./api/compress');
 const download = require('./api/download');
 
 const app = express();
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
 const PORT = process.env.PORT || 3000;
-
-// WebSocket 连接管理
-const wsConnections = new Map();
-
-wss.on('connection', (ws, req) => {
-    const taskId = new URL(req.url, 'http://localhost').searchParams.get('taskId');
-    if (taskId) {
-        wsConnections.set(taskId, ws);
-        
-        ws.on('close', () => {
-            wsConnections.delete(taskId);
-        });
-    }
-});
-
-// 导出 WebSocket 连接管理器供其他模块使用
-app.locals.wsConnections = wsConnections;
 
 // 配置文件上传
 const upload = multer({
@@ -96,10 +75,10 @@ app.use((err, req, res, next) => {
 
 // 启动服务器
 if (require.main === module) {
-    server.listen(PORT, () => {
+    app.listen(PORT, () => {
         console.log(`Server running at http://localhost:${PORT}`);
     });
 }
 
 // 导出 app 实例供 Vercel 使用
-module.exports = { app, server }; 
+module.exports = app;
