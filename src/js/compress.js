@@ -31,6 +31,21 @@ class Compressor {
         this.updateUIBeforeCompression();
 
         try {
+            // 检查API服务是否可用
+            try {
+                const healthCheck = await fetch('/api/health', {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                }).catch(() => null);
+                
+                if (!healthCheck || !healthCheck.ok) {
+                    throw new Error('API service not available, please ensure the server is running');
+                }
+            } catch (healthError) {
+                console.error('Health check failed:', healthError);
+                throw new Error('Network error: API service not connected or not started. Please check server status.');
+            }
+
             const response = await fetch('/api/compress', {
                 method: 'POST',
                 body: formData,
@@ -38,7 +53,8 @@ class Compressor {
                     'Accept': 'application/json'
                 }
             }).catch(error => {
-                throw new Error('Network error: Please check your connection');
+                console.error('Fetch error:', error);
+                throw new Error('Network error: Please check your connection and ensure the server is running');
             });
 
             if (!response.ok) {
@@ -74,7 +90,12 @@ class Compressor {
         } catch (error) {
             console.error('Compression error:', error);
             window.progress.updateStatus(error.message, true);
-            alert(error.message);
+            // 更详细的错误信息
+            if (error.message.includes('Network error')) {
+                alert('Network connection error: Please ensure the server is running and your internet connection is working');
+            } else {
+                alert(error.message);
+            }
         } finally {
             this.compressButton.disabled = false;
         }

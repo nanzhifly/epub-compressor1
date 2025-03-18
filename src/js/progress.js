@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 更新状态文本
         if (progress === 0) {
-            progressText.textContent = '准备开始...';
+            progressText.textContent = 'Ready to start...';
         } else if (progress === 100) {
-            progressText.textContent = '压缩完成！';
+            progressText.textContent = 'Compression Complete!';
         } else {
-            progressText.textContent = '正在压缩...';
+            progressText.textContent = 'Compressing...';
         }
     };
 
