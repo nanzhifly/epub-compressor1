@@ -22,11 +22,31 @@
       "dest": "/server.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "/server.js"
+      "src": "/robots.txt",
+      "dest": "/public/robots.txt"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/public/sitemap.xml"
+    },
+    {
+      "src": "/googlea025fff20a5644c5.html",
+      "dest": "/public/googlea025fff20a5644c5.html"
+    },
+    {
+      "src": "/site.webmanifest",
+      "dest": "/site.webmanifest"
+    },
+    {
+      "src": "/book.svg",
+      "dest": "/book.svg"
     },
     {
       "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
     }
   ],
   "env": {

@@ -1,0 +1,65 @@
+# robots.txt for compress-epub.online
+# Last updated: 2025-01-27
+# This file tells search engine crawlers which pages they can and cannot access
+
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow sensitive and unnecessary areas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /docs/
+Disallow: /public/
+
+# Allow important content
+Allow: /index.html
+Allow: /googlea025fff20a5644c5.html
+Allow: /book.svg
+Allow: /site.webmanifest
+Allow: /robots.txt
+Allow: /sitemap.xml
+
+# Specify the sitemap location
+Sitemap: https://compress-epub.online/sitemap.xml
+
+# Crawl delay settings for different search engines
+# Google - Fast crawling
+User-agent: Googlebot
+Crawl-delay: 1
+
+# Bing - Moderate crawling
+User-agent: bingbot
+Crawl-delay: 2
+
+# Baidu - Slower crawling
+User-agent: Baiduspider
+Crawl-delay: 3
+
+# Yandex - Slower crawling
+User-agent: Yandex
+Crawl-delay: 3
+
+# DuckDuckBot - Fast crawling
+User-agent: DuckDuckBot
+Crawl-delay: 1
+
+# Facebook - Moderate crawling
+User-agent: facebookexternalhit
+Crawl-delay: 2
+
+# Twitter - Moderate crawling
+User-agent: Twitterbot
+Crawl-delay: 2
+
+# LinkedIn - Moderate crawling
+User-agent: LinkedInBot
+Crawl-delay: 2
+
+# Additional search engines
+User-agent: *
+Crawl-delay: 2 

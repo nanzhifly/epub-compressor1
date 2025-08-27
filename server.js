@@ -37,6 +37,8 @@ app.use((req, res, next) => {
 
 // 设置静态文件服务
 app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname)); // 根目录静态文件
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -54,14 +56,25 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
-// 处理验证文件
-app.get('/googlea025fff20a5644c5.html', (req, res) => {
-    const verificationPath = path.join(__dirname, 'public', 'googlea025fff20a5644c5.html');
-    if (require('fs').existsSync(verificationPath)) {
-        res.sendFile(verificationPath);
-    } else {
-        res.status(404).send('Verification file not found');
-    }
+// SEO文件处理 - 高复用、低耦合、可扩展的设计
+const seoFiles = {
+    'robots.txt': 'public/robots.txt',
+    'sitemap.xml': 'public/sitemap.xml',
+    'googlea025fff20a5644c5.html': 'public/googlea025fff20a5644c5.html',
+    'site.webmanifest': 'site.webmanifest',
+    'book.svg': 'book.svg'
+};
+
+// 统一的SEO文件处理路由
+Object.entries(seoFiles).forEach(([url, filePath]) => {
+    app.get(`/${url}`, (req, res) => {
+        const fullPath = path.join(__dirname, filePath);
+        if (require('fs').existsSync(fullPath)) {
+            res.sendFile(fullPath);
+        } else {
+            res.status(404).send(`${url} not found`);
+        }
+    });
 });
 
 // 处理其他所有路由
