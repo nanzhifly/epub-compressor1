@@ -1,7 +1,7 @@
 {
   "version": 2,
   "buildCommand": "npm install",
-  "outputDirectory": "src",
+  "outputDirectory": ".",
   "builds": [
     {
       "src": "server.js",
@@ -9,6 +9,10 @@
     },
     {
       "src": "src/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/**",
       "use": "@vercel/static"
     }
   ],
